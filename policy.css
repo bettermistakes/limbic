@@ -119,20 +119,12 @@
 }
 
 /* test */
-/* Targets ONLY the sub-lists within the Colorado/State-Specific section */
-/* 1. Target the specific depth of the Colorado/State section */
-.special-bullet-styling ul ul li {
+/* Target the 3rd level of nested list items (e.g., 12.4.1.1) */
+.special-bullet-styling ul ul ul > li {
+    padding-left: 4rem !important;
+}
+
+/* Optional: If you ever go down to a 4th level (e.g., 12.4.1.1.1), you might want even more room */
+.special-bullet-styling ul ul ul ul > li {
     padding-left: 5rem !important;
-}
-
-/* 2. If 12.4.1.1 is even deeper (3rd level), use this */
-.special-bullet-styling ul ul ul li {
-    padding-left: 5.5rem !important;
-}
-
-/* 3. Ensure the absolute number stays pinned to the left edge of that new padding */
-.special-bullet-styling li > strong:first-child {
-    left: 0 !important;
-    width: auto !important;
-    white-space: nowrap !important;
 }
