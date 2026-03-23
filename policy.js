@@ -75,7 +75,7 @@ function initLegalTableOfContents() {
 
   function setActiveButton(activeBtn) {
     tocItems.forEach((item) => {
-      item.btn.classList.toggle("is--active", item.btn === activeBtn);
+      item.btn.classList.toggle("is-active", item.btn === activeBtn);
     });
   }
 
