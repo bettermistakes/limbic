@@ -48,18 +48,17 @@ function initLegalTableOfContents() {
       section.id = ensureUniqueId(base);
     }
 
-    const a = document.createElement("a");
-    a.href = `#${section.id}`;
-    a.className = "legal-toc-link w-inline-block";
+    // <button>: no href hash, so the browser cannot native-scroll the target to the top.
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "legal-toc-link w-inline-block";
     const p = document.createElement("p");
     p.textContent = text;
-    a.appendChild(p);
+    btn.appendChild(p);
 
-    a.addEventListener("click", (e) => {
-      e.preventDefault();
+    btn.addEventListener("click", () => {
       const toc = document.querySelector(".legal-toc");
       if (toc) toc.classList.remove("is-open");
-      // Measure after TOC closes so layout (mobile) doesn’t throw off the math.
       requestAnimationFrame(() => {
         requestAnimationFrame(() => {
           scrollElementToViewportCenter(section);
@@ -67,7 +66,7 @@ function initLegalTableOfContents() {
       });
     });
 
-    tocLinks.appendChild(a);
+    tocLinks.appendChild(btn);
   });
 }
 
