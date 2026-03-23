@@ -19,6 +19,16 @@ function initLegalTableOfContents() {
     return id;
   }
 
+  function scrollElementToViewportCenter(el) {
+    const rect = el.getBoundingClientRect();
+    const elCenterY = rect.top + window.scrollY + rect.height / 2;
+    const top = elCenterY - window.innerHeight / 2;
+    window.scrollTo({
+      top: Math.max(0, top),
+      behavior: "smooth",
+    });
+  }
+
   const wrap = document.querySelector(".legal-content-wrap");
   const tocLinks = document.querySelector(".legal-toc-links");
   if (!wrap || !tocLinks) return;
@@ -47,9 +57,14 @@ function initLegalTableOfContents() {
 
     a.addEventListener("click", (e) => {
       e.preventDefault();
-      section.scrollIntoView({ behavior: "smooth", block: "center" });
       const toc = document.querySelector(".legal-toc");
       if (toc) toc.classList.remove("is-open");
+      // Measure after TOC closes so layout (mobile) doesn’t throw off the math.
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          scrollElementToViewportCenter(section);
+        });
+      });
     });
 
     tocLinks.appendChild(a);
