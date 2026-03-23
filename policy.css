@@ -1,6 +1,7 @@
-/* Numbered legal list rows: <li><div class="li--grid"><strong>…</strong> text…</div><ul>…</ul></li> */
+/* Numbered legal list rows: <li><div class="li--grid"><strong>…</strong><div class="li--grid-body">…</div></div><ul>…</ul></li> */
 .legal-content-wrap .li--grid strong {
   position: relative;
+  font-weight: inherit;
 }
 
 /* TOC items are <button> so the browser never hash-scrolls; match link appearance */

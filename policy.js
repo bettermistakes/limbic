@@ -132,6 +132,25 @@ function initLegalTableOfContents() {
 
 /* ---------------------------- legal list items: .li--grid (strong + body text) ---------------------------- */
 
+function wrapLiGridBody(grid) {
+  if (grid.querySelector(":scope > .li--grid-body")) return;
+  const strongEl = grid.querySelector(":scope > strong");
+  if (!strongEl) return;
+
+  const body = document.createElement("div");
+  body.className = "li--grid-body";
+
+  let n = strongEl.nextSibling;
+  while (n) {
+    const next = n.nextSibling;
+    body.appendChild(n);
+    n = next;
+  }
+
+  if (!body.firstChild) return;
+  strongEl.insertAdjacentElement("afterend", body);
+}
+
 function initLiGridWrap() {
   const root = document.querySelector(".legal-content-wrap");
   if (!root) return;
@@ -157,7 +176,10 @@ function initLiGridWrap() {
 
     if (!wrapper.firstChild) return;
     li.insertBefore(wrapper, li.firstChild);
+    wrapLiGridBody(wrapper);
   });
+
+  root.querySelectorAll(".li--grid").forEach(wrapLiGridBody);
 }
 
 function bootPolicyPage() {
