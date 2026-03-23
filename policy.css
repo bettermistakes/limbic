@@ -1,0 +1,158 @@
+/* =========================================
+   DESKTOP (Above 991px)
+   ========================================= */
+@media screen and (min-width: 992px) {
+  .mobile-toc-wrap {
+    display: none !important;
+  }
+}
+
+/* =========================================
+   MOBILE / TABLET (991px and below)
+   ========================================= */
+@media screen and (max-width: 991px) {
+  
+  /* Hide the old desktop LINKS on mobile, keep the "Table of contents" heading intact */
+  .legal-toc-links {
+    display: none !important;
+  }
+
+  /* Ensure parents allow scrolling/sticking */
+  .legal-content-wrapper {
+    overflow: visible !important;
+  }
+  .legal-sidebar-column {
+    overflow: visible !important;
+  }
+
+  /* Drop any relative positioning from legal-toc so it doesn't trap mobile-toc-wrap */
+  .legal-toc {
+    width: 100% !important;
+    position: static !important;
+    margin: 0 0 16px 0 !important;
+    padding: 0 !important;
+    background: transparent !important;
+    border: none !important;
+  }
+
+  /* Huge bold "Table of contents" text strictly per Figma */
+  .toc-heading {
+    font-size: 24px !important;
+    font-weight: 700 !important;
+    color: #000 !important;
+    margin-bottom: 0 !important; 
+    line-height: 1.2 !important;
+  }
+
+  .legal-toc > .margin-bottom-16 {
+    margin-bottom: 16px !important;
+  }
+  
+  /* The new Figma dropdown wrapper */
+  .mobile-toc-wrap {
+    display: block;
+    width: 100% !important;
+    position: sticky;
+    top: 5rem; /* Sticks slightly offset from top */
+    z-index: 50;
+    background-color: #F7F7F7;
+    border-radius: 12px;
+    overflow: hidden; 
+    box-shadow: 0 10px 30px rgba(0,0,0,0.06); 
+    margin-bottom: 32px !important;
+  }
+
+  /* The clickable top bar */
+  .mobile-toc-toggle {
+    display: flex !important;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 20px;
+    cursor: pointer;
+    background-color: #F7F7F7;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  /* "Jump To..." text */
+  .mobile-toc-toggle-text {
+    flex-grow: 1;
+    font-size: 16px;
+    font-weight: 400;
+    color: #666; 
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .mobile-toc-wrap.is-open .mobile-toc-toggle-text {
+    color: #111; 
+  }
+
+  /* The right side divider | and arrow */
+  .mobile-toc-toggle-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-left: 20px;
+    margin-left: 16px;
+    border-left: 1px solid #E5E5E5;
+    height: 20px;
+  }
+
+  .mobile-toc-toggle-icon::after {
+    content: '';
+    width: 10px;
+    height: 10px;
+    border-right: 2px solid #555;
+    border-bottom: 2px solid #555;
+    transform: rotate(45deg); /* Chevron down */
+    transition: transform 0.3s ease;
+    margin-bottom: 4px; 
+  }
+
+  .mobile-toc-wrap.is-open .mobile-toc-toggle-icon::after {
+    transform: rotate(-135deg); /* Chevron up */
+    margin-bottom: -4px;
+    border-color: #111;
+  }
+
+  /* The container holding the individual links */
+  .mobile-toc-links {
+    display: none !important; /* Hide un-clicked links */
+    flex-direction: column;
+    background-color: #F7F7F7;
+    max-height: 55vh; /* Scroll inner block if there are too many sections */
+    overflow-y: auto;
+    border-top: 1px solid #EAEAEA;
+  }
+
+  .mobile-toc-wrap.is-open .mobile-toc-links {
+    display: flex !important; /* Reveal on click */
+  }
+
+  /* Individual Links */
+  .legal-toc-link {
+    padding: 16px 20px !important;
+    text-decoration: none !important;
+    background-color: transparent !important;
+    border-left: none !important;
+    border-bottom: 1px solid #EAEAEA !important;
+  }
+  
+  .legal-toc-link:last-child {
+    border-bottom: none !important; /* Remove line from last element */
+  }
+
+  .legal-toc-link p {
+    margin: 0 !important;
+    font-size: 16px !important;
+    color: #444 !important;
+    font-weight: 400 !important;
+    transition: color 0.2s ease;
+  }
+
+  .legal-toc-link.is-active p {
+    font-weight: 600 !important;
+    color: #000 !important;
+  }
+}
