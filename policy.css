@@ -119,12 +119,20 @@
 }
 
 /* test */
-/* Target the 12.4.1.x level specifically */
-.special-bullet-styling ul ul ul li {
-    padding-left: 4rem !important;
+/* Targets ONLY the sub-lists within the Colorado/State-Specific section */
+/* 1. Target the specific depth of the Colorado/State section */
+.special-bullet-styling ul ul li {
+    padding-left: 5rem !important;
 }
 
-/* Ensure the absolute-positioned number within this level is still aligned to the left */
-.special-bullet-styling ul ul ul li > strong:first-child {
-    left: 0;
+/* 2. If 12.4.1.1 is even deeper (3rd level), use this */
+.special-bullet-styling ul ul ul li {
+    padding-left: 5.5rem !important;
+}
+
+/* 3. Ensure the absolute number stays pinned to the left edge of that new padding */
+.special-bullet-styling li > strong:first-child {
+    left: 0 !important;
+    width: auto !important;
+    white-space: nowrap !important;
 }
