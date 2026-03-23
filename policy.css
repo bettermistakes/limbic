@@ -2,17 +2,9 @@
 button.legal-toc-link {
   appearance: none;
   -webkit-appearance: none;
-
+  text-align: left;
+  background-color: transparent;
   cursor: pointer;
-}
-
-/* =========================================
-   DESKTOP (Above 991px)
-   ========================================= */
-@media screen and (min-width: 992px) {
-  .legal-toc-links {
-    display: block !important;
-  }
 }
 
 /* =========================================
@@ -120,7 +112,7 @@ button.legal-toc-link {
     color: #444 !important;
     font-weight: 400 !important;
   }
-  .legal-toc-link.is-active p {
+  .legal-toc-link.is--active p {
     font-weight: 600 !important;
     color: #000 !important;
   }

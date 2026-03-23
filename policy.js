@@ -36,6 +36,8 @@ function initLegalTableOfContents() {
   const topics = wrap.querySelectorAll(".legal-topic");
   tocLinks.textContent = "";
 
+  const tocItems = [];
+
   topics.forEach((topicEl, index) => {
     const section = topicEl.closest(".legal-content-section");
     if (!section) return;
@@ -57,6 +59,9 @@ function initLegalTableOfContents() {
     btn.appendChild(p);
 
     btn.addEventListener("click", () => {
+      tocItems.forEach((item) => {
+        item.btn.classList.toggle("is-active", item.btn === btn);
+      });
       const toc = document.querySelector(".legal-toc");
       if (toc) toc.classList.remove("is-open");
       requestAnimationFrame(() => {
@@ -67,7 +72,26 @@ function initLegalTableOfContents() {
     });
 
     tocLinks.appendChild(btn);
+    tocItems.push({ section, btn, topicEl });
   });
+
+  function syncActiveFromSection(sectionEl) {
+    tocItems.forEach((item) => {
+      item.btn.classList.toggle("is-active", item.section === sectionEl);
+    });
+  }
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        syncActiveFromSection(entry.target);
+      });
+    },
+    { root: null, rootMargin: "0rem 0rem -60% 0rem", threshold: 0 },
+  );
+
+  tocItems.forEach((item) => observer.observe(item.section));
 }
 
 if (document.readyState === "loading") {
