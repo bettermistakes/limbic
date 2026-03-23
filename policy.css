@@ -1,145 +1,138 @@
 /* TOC items are <button> so the browser never hash-scrolls; match link appearance */
 button.legal-toc-link {
-    appearance: none;
-    -webkit-appearance: none;
-    font: inherit;
-    color: inherit;
-    text-align: left;
-    width: 100%;
-    cursor: pointer;
-    margin: 0;
-    border: none;
-    border-radius: 0;
-    box-sizing: border-box;
+  appearance: none;
+  -webkit-appearance: none;
+
+  cursor: pointer;
 }
 
 /* =========================================
    DESKTOP (Above 991px)
    ========================================= */
 @media screen and (min-width: 992px) {
-    .legal-toc-links {
-        display: block !important;
-    }
+  .legal-toc-links {
+    display: block !important;
+  }
 }
 
 /* =========================================
    MOBILE / TABLET (991px and below)
    ========================================= */
 @media screen and (max-width: 991px) {
-    /* Ensure parents allow scrolling/sticking */
-    .legal-content-wrapper,
-    .legal-sidebar-column {
-        overflow: visible !important;
-    }
+  /* Ensure parents allow scrolling/sticking */
+  .legal-content-wrapper,
+  .legal-sidebar-column {
+    overflow: visible !important;
+  }
 
-    /* Transform your existing wrapper into the mobile dropdown */
-    .legal-toc {
-        display: block;
-        width: 100% !important;
-        position: sticky;
-        top: 5rem;
-        z-index: 50;
-        background-color: #f7f7f7 !important;
-        border-radius: 0.75rem !important;
-        border: none !important;
-        box-shadow: 0 0.625rem 1.875rem rgba(0, 0, 0, 0.06) !important;
-        margin: 0 0 2rem 0 !important;
-        padding: 0 !important;
-    }
+  /* Transform your existing wrapper into the mobile dropdown */
+  .legal-toc {
+    display: block;
+    width: 100% !important;
+    position: sticky;
+    top: 5rem;
+    z-index: 50;
+    background-color: #f7f7f7 !important;
+    border-radius: 0.75rem !important;
+    border: none !important;
+    box-shadow: 0 0.625rem 1.875rem rgba(0, 0, 0, 0.06) !important;
+    margin: 0 0 2rem 0 !important;
+    padding: 0 !important;
+  }
 
-    /* The clickable top bar (reusing your existing div) */
-    .legal-toc .margin-bottom-16 {
-        display: flex !important;
-        justify-content: space-between;
-        align-items: center;
-        padding: 1rem 1.25rem !important;
-        margin-bottom: 0 !important;
-        cursor: pointer;
-        -webkit-tap-highlight-color: transparent;
-    }
+  /* The clickable top bar (reusing your existing div) */
+  .legal-toc .margin-bottom-16 {
+    display: flex !important;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 1.25rem !important;
+    margin-bottom: 0 !important;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+  }
 
-    /* The Jump To text (reusing your existing p) */
-    .toc-heading {
-        font-size: 1rem !important;
-        font-weight: 400 !important;
-        color: #666 !important;
-        margin: 0 !important;
-        line-height: 1.2 !important;
-    }
+  /* The Jump To text (reusing your existing p) */
+  .toc-heading {
+    font-size: 1rem !important;
+    font-weight: 400 !important;
+    color: #666 !important;
+    margin: 0 !important;
+    line-height: 1.2 !important;
+  }
 
-    .legal-toc.is-open .toc-heading {
-        color: #111 !important;
-    }
+  .legal-toc.is-open .toc-heading {
+    color: #111 !important;
+  }
 
-    /* Chevron via CSS pseudo-element on the heading container */
-    .legal-toc .margin-bottom-16::after {
-        content: "";
-        display: block;
-        width: 0.625rem;
-        height: 0.625rem;
-        border-right: 0.125rem solid #555;
-        border-bottom: 0.125rem solid #555;
-        transform: rotate(45deg); /* Pointing down */
-        transition: transform 0.3s ease;
-        margin-left: 1rem;
-        flex-shrink: 0;
-    }
+  /* Chevron via CSS pseudo-element on the heading container */
+  .legal-toc .margin-bottom-16::after {
+    content: "";
+    display: block;
+    width: 0.625rem;
+    height: 0.625rem;
+    border-right: 0.125rem solid #555;
+    border-bottom: 0.125rem solid #555;
+    transform: rotate(45deg); /* Pointing down */
+    transition: transform 0.3s ease;
+    margin-left: 1rem;
+    flex-shrink: 0;
+  }
 
-    .legal-toc.is-open .margin-bottom-16::after {
-        transform: rotate(-135deg); /* Pointing up */
-        margin-top: 0.375rem;
-        border-color: #111;
-    }
+  .legal-toc.is-open .margin-bottom-16::after {
+    transform: rotate(-135deg); /* Pointing up */
+    margin-top: 0.375rem;
+    border-color: #111;
+  }
 
-    /* =========================================
+  /* =========================================
      THE FIX: TOGGLING VISIBILITY
      ========================================= */
 
-    /* 1. Hide by default */
-    .legal-toc-links {
-        display: none !important;
-    }
+  /* 1. Hide by default */
+  .legal-toc-links {
+    display: none !important;
+  }
 
-    /* 2. Force reveal when parent has .is-open */
-    .legal-toc.is-open .legal-toc-links {
-        display: flex !important;
-        flex-direction: column;
-        max-height: 55vh;
-        overflow-y: auto;
-        border-top: 0.0625rem solid #eaeaea;
-        padding-top: 0 !important;
-        margin-top: 0 !important;
-    }
+  /* 2. Force reveal when parent has .is-open */
+  .legal-toc.is-open .legal-toc-links {
+    display: flex !important;
+    flex-direction: column;
+    max-height: 55vh;
+    overflow-y: auto;
+    border-top: 0.0625rem solid #eaeaea;
+    padding-top: 0 !important;
+    margin-top: 0 !important;
+  }
 
-    /* Individual Links */
-    .legal-toc-link {
-        padding: 1rem 1.25rem !important;
-        border-bottom: 0.0625rem solid #eaeaea !important;
-        border-left: none !important;
-        background: transparent !important;
-    }
-    .legal-toc-link:last-child {
-        border-bottom: none !important;
-    }
-    .legal-toc-link p {
-        margin: 0 !important;
-        font-size: 1rem !important;
-        color: #444 !important;
-        font-weight: 400 !important;
-    }
-    .legal-toc-link.is-active p {
-        font-weight: 600 !important;
-        color: #000 !important;
-    }
+  /* Individual Links */
+  .legal-toc-link {
+    padding: 1rem 1.25rem !important;
+    border-bottom: 0.0625rem solid #eaeaea !important;
+    border-left: none !important;
+    background: transparent !important;
+  }
+  .legal-toc-link:last-child {
+    border-bottom: none !important;
+  }
+  .legal-toc-link p {
+    margin: 0 !important;
+    font-size: 1rem !important;
+    color: #444 !important;
+    font-weight: 400 !important;
+  }
+  .legal-toc-link.is-active p {
+    font-weight: 600 !important;
+    color: #000 !important;
+  }
 }
 
 /* test */
 /* Target the 3rd level of nested list items (e.g., 12.4.1.1) */
 .special-bullet-styling ul ul ul > li {
-    padding-left: 4rem !important;
+  padding-left: 4rem !important;
 }
 
 /* Optional: If you ever go down to a 4th level (e.g., 12.4.1.1.1), you might want even more room */
 .special-bullet-styling ul ul ul ul > li {
-    padding-left: 5rem !important;
+  padding-left: 5rem !important;
 }
