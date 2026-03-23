@@ -74,7 +74,7 @@
     }
 
     // Active state observer
-    const observerOptions = { root: null, rootMargin: '0px 0px -60% 0px', threshold: 0 };
+    const observerOptions = { root: null, rootMargin: '0rem 0rem -60% 0rem', threshold: 0 };
     const observerCallback = function (entries) {
       entries.forEach(function (entry) {
         if (entry.isIntersecting) {
