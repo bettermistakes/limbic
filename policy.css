@@ -1,3 +1,8 @@
+/* Numbered legal list rows: <li><div class="li--grid"><strong>…</strong> text…</div><ul>…</ul></li> */
+.legal-content-wrap .li--grid strong {
+  position: relative;
+}
+
 /* TOC items are <button> so the browser never hash-scrolls; match link appearance */
 button.legal-toc-link {
   appearance: none;

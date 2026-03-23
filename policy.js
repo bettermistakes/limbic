@@ -130,8 +130,43 @@ function initLegalTableOfContents() {
   updateActiveFromScroll();
 }
 
-if (document.readyState === "loading") {
-  document.addEventListener("DOMContentLoaded", initLegalTableOfContents);
-} else {
+/* ---------------------------- legal list items: .li--grid (strong + body text) ---------------------------- */
+
+function initLiGridWrap() {
+  const root = document.querySelector(".legal-content-wrap");
+  if (!root) return;
+
+  root.querySelectorAll("li").forEach((li) => {
+    if (li.querySelector(":scope > .li--grid")) return;
+    const firstEl = li.firstElementChild;
+    if (!firstEl || firstEl.tagName !== "STRONG") return;
+
+    const wrapper = document.createElement("div");
+    wrapper.className = "li--grid";
+
+    while (li.firstChild) {
+      const node = li.firstChild;
+      if (
+        node.nodeType === Node.ELEMENT_NODE &&
+        (node.tagName === "UL" || node.tagName === "OL")
+      ) {
+        break;
+      }
+      wrapper.appendChild(node);
+    }
+
+    if (!wrapper.firstChild) return;
+    li.insertBefore(wrapper, li.firstChild);
+  });
+}
+
+function bootPolicyPage() {
   initLegalTableOfContents();
+  initLiGridWrap();
+}
+
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", bootPolicyPage);
+} else {
+  bootPolicyPage();
 }
