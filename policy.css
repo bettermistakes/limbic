@@ -115,16 +115,6 @@ button.legal-toc-link {
   .legal-toc-link:last-child {
     border-bottom: none !important;
   }
-  .legal-toc-link p {
-    margin: 0 !important;
-    font-size: 1rem !important;
-    color: #444 !important;
-    font-weight: 400 !important;
-  }
-  .legal-toc-link.is-active p {
-    font-weight: 600 !important;
-    color: #000 !important;
-  }
 }
 
 /* test */
