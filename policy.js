@@ -33,6 +33,28 @@ function initLegalTableOfContents() {
   const tocLinks = document.querySelector(".legal-toc-links");
   if (!wrap || !tocLinks) return;
 
+  const docTableRoot = tocLinks.closest(".legal-doc-table-content");
+  const docTrigger = docTableRoot?.querySelector(".legal-doc-trigger");
+
+  const isMobileDocToc = () => window.innerWidth <= 991;
+
+  function closeDocDropdown() {
+    if (docTableRoot) docTableRoot.classList.remove("is-open");
+  }
+
+  if (docTrigger && docTableRoot) {
+    docTrigger.addEventListener("click", (e) => {
+      e.stopPropagation();
+      if (!isMobileDocToc()) return;
+      docTableRoot.classList.toggle("is-open");
+    });
+
+    document.addEventListener("click", (e) => {
+      if (!isMobileDocToc()) return;
+      if (!docTableRoot.contains(e.target)) closeDocDropdown();
+    });
+  }
+
   const topics = wrap.querySelectorAll(".legal-topic");
   tocLinks.textContent = "";
 
@@ -60,8 +82,7 @@ function initLegalTableOfContents() {
 
     btn.addEventListener("click", () => {
       setActiveButton(btn);
-      const toc = document.querySelector(".legal-toc");
-      if (toc) toc.classList.remove("is-open");
+      closeDocDropdown();
       requestAnimationFrame(() => {
         requestAnimationFrame(() => {
           scrollElementTopToViewportCenter(topicEl);
@@ -99,6 +120,7 @@ function initLegalTableOfContents() {
     scrollSpyTicking = true;
     requestAnimationFrame(() => {
       scrollSpyTicking = false;
+      if (!isMobileDocToc()) closeDocDropdown();
       updateActiveFromScroll();
     });
   }

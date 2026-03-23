@@ -8,6 +8,20 @@ button.legal-toc-link {
 }
 
 /* =========================================
+   DESKTOP (992px and up)
+   ========================================= */
+@media screen and (min-width: 992px) {
+  .legal-doc-table-content .legal-toc-links {
+    display: flex !important;
+    flex-direction: column;
+  }
+
+  .legal-doc-table-content .legal-doc-trigger {
+    display: none !important;
+  }
+}
+
+/* =========================================
    MOBILE / TABLET (991px and below)
    ========================================= */
 @media screen and (max-width: 991px) {
@@ -17,8 +31,7 @@ button.legal-toc-link {
     overflow: visible !important;
   }
 
-  /* Transform your existing wrapper into the mobile dropdown */
-  .legal-toc {
+  .legal-doc-table-content {
     display: block;
     width: 100% !important;
     position: sticky;
@@ -32,61 +45,51 @@ button.legal-toc-link {
     padding: 0 !important;
   }
 
-  /* The clickable top bar (reusing your existing div) */
-  .legal-toc .margin-bottom-16 {
+  .legal-doc-trigger {
     display: flex !important;
     justify-content: space-between;
     align-items: center;
     padding: 1rem 1.25rem !important;
-    margin-bottom: 0 !important;
+    margin: 0 !important;
     cursor: pointer;
     -webkit-tap-highlight-color: transparent;
+    gap: 0.75rem;
   }
 
-  /* The Jump To text (reusing your existing p) */
-  .toc-heading {
+  .legal-doc-trigger > div {
     font-size: 1rem !important;
     font-weight: 400 !important;
     color: #666 !important;
     margin: 0 !important;
     line-height: 1.2 !important;
+    flex: 1;
+    text-align: left;
   }
 
-  .legal-toc.is-open .toc-heading {
+  .legal-doc-table-content.is-open .legal-doc-trigger > div {
     color: #111 !important;
   }
 
-  /* Chevron via CSS pseudo-element on the heading container */
-  .legal-toc .margin-bottom-16::after {
-    content: "";
-    display: block;
-    width: 0.625rem;
-    height: 0.625rem;
-    border-right: 0.125rem solid #555;
-    border-bottom: 0.125rem solid #555;
-    transform: rotate(45deg); /* Pointing down */
-    transition: transform 0.3s ease;
-    margin-left: 1rem;
+  .legal-doc-trigger-icon {
+    width: 1.25rem;
+    height: 1.25rem;
     flex-shrink: 0;
+    color: #555;
+    transition: transform 0.3s ease;
   }
 
-  .legal-toc.is-open .margin-bottom-16::after {
-    transform: rotate(-135deg); /* Pointing up */
-    margin-top: 0.375rem;
-    border-color: #111;
+  .legal-doc-table-content.is-open .legal-doc-trigger-icon {
+    transform: rotate(180deg);
+    color: #111;
   }
 
-  /* =========================================
-     THE FIX: TOGGLING VISIBILITY
-     ========================================= */
-
-  /* 1. Hide by default */
-  .legal-toc-links {
+  /* 1. Hide list until open */
+  .legal-doc-table-content .legal-toc-links {
     display: none !important;
   }
 
-  /* 2. Force reveal when parent has .is-open */
-  .legal-toc.is-open .legal-toc-links {
+  /* 2. Open state */
+  .legal-doc-table-content.is-open .legal-toc-links {
     display: flex !important;
     flex-direction: column;
     max-height: 55vh;
@@ -96,7 +99,7 @@ button.legal-toc-link {
     margin-top: 0 !important;
   }
 
-  /* Individual Links */
+  /* Individual links */
   .legal-toc-link {
     padding: 1rem 1.25rem !important;
     border-bottom: 0.0625rem solid #eaeaea !important;
