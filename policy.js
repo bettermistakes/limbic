@@ -1,18 +1,17 @@
 (function () {
   function initTOC() {
-    const tocWrapper = document.querySelector('.legal-toc');
-    const tocLinks = document.querySelector('.legal-toc-links');
+    // 1. Target both desktop and mobile containers
+    const desktopLinksContainer = document.querySelector('.legal-toc-links');
+    
+    const mobileWrapper = document.querySelector('.mobile-toc-wrap');
+    const mobileLinksContainer = document.querySelector('.mobile-toc-links');
+    const mobileToggleText = document.querySelector('.mobile-toc-toggle-text');
+
     const headings = document.querySelectorAll('.legal-content-section h5, .legal-content-section .text-weight-xbold, .legal-content-section .legal-topic');
 
-    // 1. Safety check: ensure elements exist before running
-    if (!tocWrapper || !tocLinks || headings.length === 0) {
-      console.warn("TOC script aborted: Could not find required elements or headings.");
+    if (headings.length === 0) {
+      console.warn("TOC script aborted: No headings found.");
       return;
-    }
-
-    // Force display block on mobile just in case Webflow natively hides it
-    if (window.innerWidth <= 991) {
-      tocWrapper.style.display = 'block';
     }
 
     function slugify(text) {
@@ -22,11 +21,13 @@
         .replace(/-+/g, '-');
     }
 
-    // Clear placeholder links
-    tocLinks.innerHTML = '';
+    // Clear placeholders
+    if (desktopLinksContainer) desktopLinksContainer.innerHTML = '';
+    if (mobileLinksContainer) mobileLinksContainer.innerHTML = '';
+    
     const anchors = [];
 
-    // Build the links
+    // Build the links for both containers
     headings.forEach(function (heading) {
       const text = heading.textContent.trim();
       if (!text) return;
@@ -40,43 +41,52 @@
         heading.setAttribute('id', id);
       }
 
-      const a = document.createElement('a');
-      a.href = '#' + id;
-      a.className = 'legal-toc-link w-inline-block';
-      a.innerHTML = '<p class="text-size-regular">' + text + '</p>';
+      // Helper function to create the actual link element
+      function createLinkObj() {
+        const a = document.createElement('a');
+        a.href = '#' + id;
+        a.className = 'legal-toc-link w-inline-block';
+        a.innerHTML = '<p class="text-size-regular">' + text + '</p>';
 
-      a.addEventListener('click', function (e) {
-        e.preventDefault();
-        e.stopPropagation();
+        a.addEventListener('click', function (e) {
+          e.preventDefault();
+          e.stopPropagation();
 
-        // Close mobile dropdown
-        tocWrapper.classList.remove('is-open');
+          // Close mobile dropdown & update text
+          if (mobileWrapper) mobileWrapper.classList.remove('is-open');
+          if (mobileToggleText && window.innerWidth <= 991) {
+            mobileToggleText.textContent = text;
+          }
 
-        // Update heading text
-        const mobileHeading = document.querySelector('.toc-heading');
-        if (mobileHeading && window.innerWidth <= 991) {
-          mobileHeading.textContent = text;
-        }
+          const target = document.getElementById(id);
+          if (target) {
+            const offsetPx = parseFloat(getComputedStyle(document.documentElement).fontSize) * 13;
+            const top = target.getBoundingClientRect().top + window.pageYOffset - offsetPx;
+            window.scrollTo({ top: top, behavior: 'smooth' });
+            history.pushState(null, '', '#' + id);
+          }
+        });
+        return a;
+      }
 
-        const target = document.getElementById(id);
-        if (target) {
-          const offsetPx = parseFloat(getComputedStyle(document.documentElement).fontSize) * 13;
-          const top = target.getBoundingClientRect().top + window.pageYOffset - offsetPx;
-          window.scrollTo({ top: top, behavior: 'smooth' });
-          history.pushState(null, '', '#' + id);
-        }
-      });
-
-      tocLinks.appendChild(a);
-      anchors.push({ id: id, link: a });
+      // Inject into desktop
+      if (desktopLinksContainer) {
+        const dLink = createLinkObj();
+        desktopLinksContainer.appendChild(dLink);
+        anchors.push({ id: id, link: dLink });
+      }
+      
+      // Inject into mobile
+      if (mobileLinksContainer) {
+        const mLink = createLinkObj();
+        mobileLinksContainer.appendChild(mLink);
+        anchors.push({ id: id, link: mLink });
+      }
     });
 
     // Mobile heading default text
-    const tocHeading = document.querySelector('.toc-heading');
-    const isMobile = function () { return window.innerWidth <= 991; };
-
-    if (tocHeading && isMobile()) {
-      tocHeading.textContent = 'Jump to\u2026';
+    if (mobileToggleText && !mobileToggleText.textContent.trim()) {
+      mobileToggleText.textContent = 'Jump to\u2026';
     }
 
     // Active state observer
@@ -86,9 +96,12 @@
         if (entry.isIntersecting) {
           const activeId = entry.target.getAttribute('id');
           anchors.forEach(function (item) {
-            item.link.classList.toggle('is-active', item.id === activeId);
-            if (item.id === activeId && isMobile() && tocHeading) {
-              tocHeading.textContent = item.link.textContent.trim();
+            const isActive = item.id === activeId;
+            item.link.classList.toggle('is-active', isActive);
+            
+            // Sync mobile header text to the active section
+            if (isActive && window.innerWidth <= 991 && mobileToggleText) {
+              mobileToggleText.textContent = item.link.textContent.trim();
             }
           });
         }
@@ -101,26 +114,33 @@
       if (el) observer.observe(el);
     });
 
-    // Mobile dropdown toggle
-    tocWrapper.addEventListener('click', function (e) {
-      if (window.innerWidth > 991) return;
-      const clickedLink = e.target.closest('.legal-toc-link');
-      if (clickedLink) {
-        tocWrapper.classList.remove('is-open');
-        return;
-      }
-      tocWrapper.classList.toggle('is-open');
-    });
+    // Mobile dropdown toggle logic
+    if (mobileWrapper) {
+      // Find the toggle button inside the wrapper, or fallback to clicking the wrapper itself
+      const toggleBtn = mobileWrapper.querySelector('.mobile-toc-toggle') || mobileWrapper;
+      
+      toggleBtn.addEventListener('click', function (e) {
+        if (window.innerWidth > 991) return;
+        
+        // Prevent toggle if they clicked an actual link
+        if (e.target.closest('.legal-toc-link')) {
+          mobileWrapper.classList.remove('is-open');
+          return;
+        }
+        mobileWrapper.classList.toggle('is-open');
+      });
 
-    document.addEventListener('click', function (e) {
-      if (window.innerWidth > 991) return;
-      if (!tocWrapper.contains(e.target)) {
-        tocWrapper.classList.remove('is-open');
-      }
-    });
+      // Close when clicking outside
+      document.addEventListener('click', function (e) {
+        if (window.innerWidth > 991) return;
+        if (!mobileWrapper.contains(e.target)) {
+          mobileWrapper.classList.remove('is-open');
+        }
+      });
+    }
   }
 
-  // 2. Execution logic: handle Webflow's script loading timing
+  // Execution logic: handle Webflow's script loading timing
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', initTOC);
   } else {
