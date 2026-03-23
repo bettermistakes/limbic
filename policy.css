@@ -112,7 +112,7 @@ button.legal-toc-link {
     color: #444 !important;
     font-weight: 400 !important;
   }
-  .legal-toc-link.is--active p {
+  .legal-toc-link.is-active p {
     font-weight: 600 !important;
     color: #000 !important;
   }
