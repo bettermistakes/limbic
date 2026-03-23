@@ -59,9 +59,7 @@ function initLegalTableOfContents() {
     btn.appendChild(p);
 
     btn.addEventListener("click", () => {
-      tocItems.forEach((item) => {
-        item.btn.classList.toggle("is-active", item.btn === btn);
-      });
+      setActiveButton(btn);
       const toc = document.querySelector(".legal-toc");
       if (toc) toc.classList.remove("is-open");
       requestAnimationFrame(() => {
@@ -75,23 +73,39 @@ function initLegalTableOfContents() {
     tocItems.push({ section, btn, topicEl });
   });
 
-  function syncActiveFromSection(sectionEl) {
+  function setActiveButton(activeBtn) {
     tocItems.forEach((item) => {
-      item.btn.classList.toggle("is-active", item.section === sectionEl);
+      item.btn.classList.toggle("is--active", item.btn === activeBtn);
     });
   }
 
-  const observer = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (!entry.isIntersecting) return;
-        syncActiveFromSection(entry.target);
-      });
-    },
-    { root: null, rootMargin: "0rem 0rem -60% 0rem", threshold: 0 },
-  );
+  // Scroll spy: active section = last one whose top has crossed the marker (stays stable while you read the section body).
+  const scrollMarkerRatio = 0.5;
 
-  tocItems.forEach((item) => observer.observe(item.section));
+  function updateActiveFromScroll() {
+    if (!tocItems.length) return;
+    const markerY = window.innerHeight * scrollMarkerRatio;
+    let activeIdx = 0;
+    for (let i = 0; i < tocItems.length; i++) {
+      const top = tocItems[i].section.getBoundingClientRect().top;
+      if (top <= markerY) activeIdx = i;
+    }
+    setActiveButton(tocItems[activeIdx].btn);
+  }
+
+  let scrollSpyTicking = false;
+  function onScrollOrResize() {
+    if (scrollSpyTicking) return;
+    scrollSpyTicking = true;
+    requestAnimationFrame(() => {
+      scrollSpyTicking = false;
+      updateActiveFromScroll();
+    });
+  }
+
+  window.addEventListener("scroll", onScrollOrResize, { passive: true });
+  window.addEventListener("resize", onScrollOrResize);
+  updateActiveFromScroll();
 }
 
 if (document.readyState === "loading") {
