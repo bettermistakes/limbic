@@ -60,6 +60,21 @@ function initLegalTableOfContents() {
 
   const tocItems = [];
 
+  let tocNavPendingBtn = null;
+  let tocNavFallbackTimer = null;
+
+  function finishTocProgrammaticNavigation() {
+    if (!tocNavPendingBtn) return;
+    tocNavPendingBtn = null;
+    if (tocNavFallbackTimer != null) {
+      clearTimeout(tocNavFallbackTimer);
+      tocNavFallbackTimer = null;
+    }
+    updateActiveFromScroll();
+  }
+
+  window.addEventListener("scrollend", finishTocProgrammaticNavigation);
+
   topics.forEach((topicEl, index) => {
     const section = topicEl.closest(".legal-content-section");
     if (!section) return;
@@ -81,6 +96,8 @@ function initLegalTableOfContents() {
     btn.appendChild(p);
 
     btn.addEventListener("click", () => {
+      tocNavPendingBtn = btn;
+      if (tocNavFallbackTimer != null) clearTimeout(tocNavFallbackTimer);
       setActiveButton(btn);
       closeDocDropdown();
       requestAnimationFrame(() => {
@@ -88,6 +105,7 @@ function initLegalTableOfContents() {
           scrollElementTopToViewportCenter(topicEl);
         });
       });
+      tocNavFallbackTimer = window.setTimeout(finishTocProgrammaticNavigation, 900);
     });
 
     tocLinks.appendChild(btn);
@@ -106,6 +124,7 @@ function initLegalTableOfContents() {
 
   function updateActiveFromScroll() {
     if (!tocItems.length) return;
+    if (tocNavPendingBtn) return;
     const markerY = window.innerHeight * scrollMarkerRatio;
     let activeIdx = 0;
     for (let i = 0; i < tocItems.length; i++) {
