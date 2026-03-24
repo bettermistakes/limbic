@@ -19,10 +19,12 @@ function initLegalTableOfContents() {
     return id;
   }
 
-  function scrollElementTopToViewportCenter(el) {
+  const TOC_SCROLL_TOP_OFFSET_PX = 200;
+
+  function scrollTocTargetIntoView(el) {
     const rect = el.getBoundingClientRect();
     const elTopY = rect.top + window.scrollY;
-    const top = elTopY - window.innerHeight / 2;
+    const top = elTopY - TOC_SCROLL_TOP_OFFSET_PX;
     window.scrollTo({
       top: Math.max(0, top),
       behavior: "smooth",
@@ -102,7 +104,7 @@ function initLegalTableOfContents() {
       closeDocDropdown();
       requestAnimationFrame(() => {
         requestAnimationFrame(() => {
-          scrollElementTopToViewportCenter(topicEl);
+          scrollTocTargetIntoView(topicEl);
         });
       });
       tocNavFallbackTimer = window.setTimeout(finishTocProgrammaticNavigation, 900);
