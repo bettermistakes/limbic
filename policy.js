@@ -100,7 +100,8 @@ function initLegalTableOfContents() {
     });
   }
 
-  // Scroll spy: active section = last one whose top has crossed the marker (stays stable while you read the section body).
+  // Scroll spy: use each .legal-topic top (same node we scroll to on click), not .legal-content-section —
+  // section boxes often sit higher (margins/wrappers), so the old logic could keep the previous item active after jumping to e.g. section 6.
   const scrollMarkerRatio = 0.5;
 
   function updateActiveFromScroll() {
@@ -108,7 +109,7 @@ function initLegalTableOfContents() {
     const markerY = window.innerHeight * scrollMarkerRatio;
     let activeIdx = 0;
     for (let i = 0; i < tocItems.length; i++) {
-      const top = tocItems[i].section.getBoundingClientRect().top;
+      const top = tocItems[i].topicEl.getBoundingClientRect().top;
       if (top <= markerY) activeIdx = i;
     }
     setActiveButton(tocItems[activeIdx].btn);
