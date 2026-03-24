@@ -19,6 +19,11 @@ function initLegalTableOfContents() {
     return id;
   }
 
+  function stripLeadingSectionNumber(s) {
+    const stripped = s.replace(/^\d+(?:\.\d+)*\.?\s+/, "").trim();
+    return stripped || s;
+  }
+
   const TOC_SCROLL_TOP_OFFSET_PX = 200;
 
   function scrollTocTargetIntoView(el) {
@@ -94,7 +99,7 @@ function initLegalTableOfContents() {
     btn.type = "button";
     btn.className = "legal-toc-link w-inline-block";
     const p = document.createElement("p");
-    p.textContent = text;
+    p.textContent = stripLeadingSectionNumber(text);
     btn.appendChild(p);
 
     btn.addEventListener("click", () => {
