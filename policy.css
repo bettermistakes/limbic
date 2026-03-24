@@ -1,155 +1,155 @@
 /* Numbered legal list rows: <li><div class="li--grid"><strong>…</strong><div class="li--grid-body">…</div></div><ul>…</ul></li> */
 .legal-content-wrap .li--grid {
-  display: grid;
-  grid-template-columns: max-content 1fr;
-  column-gap: 0.75rem;
-  align-items: center;
+    display: grid;
+    grid-template-columns: max-content 1fr;
+    column-gap: 0.75rem;
+    align-items: start;
 }
 
 .legal-content-wrap .li--grid-body {
-  min-width: 0;
+    min-width: 0;
 }
 
 .legal-content-wrap .li--grid strong {
-  position: relative;
-  font-weight: inherit;
+    position: relative;
+    font-weight: inherit;
 }
 
 /* TOC items are <button> so the browser never hash-scrolls; match link appearance */
 button.legal-toc-link {
-  appearance: none;
-  -webkit-appearance: none;
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  width: 100%;
-  text-align: left;
-  background-color: transparent;
-  cursor: pointer;
+    appearance: none;
+    -webkit-appearance: none;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    width: 100%;
+    text-align: left;
+    background-color: transparent;
+    cursor: pointer;
 }
 
 .legal-toc-link p {
-  margin: 0;
-  line-height: 1.35;
+    margin: 0;
+    line-height: 1.35;
 }
 
 /* =========================================
    DESKTOP (992px and up)
    ========================================= */
 @media screen and (min-width: 992px) {
-  .legal-doc-table-content .legal-toc-links {
-    display: flex !important;
-    flex-direction: column;
-  }
+    .legal-doc-table-content .legal-toc-links {
+        display: flex !important;
+        flex-direction: column;
+    }
 
-  .legal-doc-table-content .legal-doc-trigger {
-    display: none !important;
-  }
+    .legal-doc-table-content .legal-doc-trigger {
+        display: none !important;
+    }
 }
 
 /* =========================================
    MOBILE / TABLET (991px and below)
    ========================================= */
 @media screen and (max-width: 991px) {
-  /* Ensure parents allow scrolling/sticking */
-  .legal-content-wrapper,
-  .legal-sidebar-column {
-    overflow: visible !important;
-  }
+    /* Ensure parents allow scrolling/sticking */
+    .legal-content-wrapper,
+    .legal-sidebar-column {
+        overflow: visible !important;
+    }
 
-  .legal-doc-table-content {
-    display: block;
-    width: 100% !important;
-    position: sticky;
-    top: 5rem;
-    z-index: 50;
-    background-color: #f7f7f7 !important;
-    border-radius: 0.75rem !important;
-    border: none !important;
-    box-shadow: 0 0.625rem 1.875rem rgba(0, 0, 0, 0.06) !important;
-    margin: 0 0 2rem 0 !important;
-    padding: 0 !important;
-  }
+    .legal-doc-table-content {
+        display: block;
+        width: 100% !important;
+        position: sticky;
+        top: 5rem;
+        z-index: 50;
+        background-color: #f7f7f7 !important;
+        border-radius: 0.75rem !important;
+        border: none !important;
+        box-shadow: 0 0.625rem 1.875rem rgba(0, 0, 0, 0.06) !important;
+        margin: 0 0 2rem 0 !important;
+        padding: 0 !important;
+    }
 
-  .legal-doc-trigger {
-    display: flex !important;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1rem 1.25rem !important;
-    margin: 0 !important;
-    cursor: pointer;
-    -webkit-tap-highlight-color: transparent;
-    gap: 0.75rem;
-  }
+    .legal-doc-trigger {
+        display: flex !important;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1rem 1.25rem !important;
+        margin: 0 !important;
+        cursor: pointer;
+        -webkit-tap-highlight-color: transparent;
+        gap: 0.75rem;
+    }
 
-  .legal-doc-trigger > div {
-    font-size: 1rem !important;
-    font-weight: 400 !important;
-    color: #666 !important;
-    margin: 0 !important;
-    line-height: 1.2 !important;
-    flex: 1;
-    text-align: left;
-  }
+    .legal-doc-trigger > div {
+        font-size: 1rem !important;
+        font-weight: 400 !important;
+        color: #666 !important;
+        margin: 0 !important;
+        line-height: 1.2 !important;
+        flex: 1;
+        text-align: left;
+    }
 
-  .legal-doc-table-content.is-open .legal-doc-trigger > div {
-    color: #111 !important;
-  }
+    .legal-doc-table-content.is-open .legal-doc-trigger > div {
+        color: #111 !important;
+    }
 
-  .legal-doc-trigger-icon {
-    width: 1.25rem;
-    height: 1.25rem;
-    flex-shrink: 0;
-    color: #555;
-    transition: transform 0.3s ease;
-  }
+    .legal-doc-trigger-icon {
+        width: 1.25rem;
+        height: 1.25rem;
+        flex-shrink: 0;
+        color: #555;
+        transition: transform 0.3s ease;
+    }
 
-  .legal-doc-table-content.is-open .legal-doc-trigger-icon {
-    transform: rotate(180deg);
-    color: #111;
-  }
+    .legal-doc-table-content.is-open .legal-doc-trigger-icon {
+        transform: rotate(180deg);
+        color: #111;
+    }
 
-  /* 1. Hide list until open */
-  .legal-doc-table-content .legal-toc-links {
-    display: none !important;
-  }
+    /* 1. Hide list until open */
+    .legal-doc-table-content .legal-toc-links {
+        display: none !important;
+    }
 
-  /* 2. Open state */
-  .legal-doc-table-content.is-open .legal-toc-links {
-    display: flex !important;
-    flex-direction: column;
-    max-height: 55vh;
-    overflow-y: auto;
-    border-top: 0.0625rem solid #eaeaea;
-    padding-top: 0 !important;
-    margin-top: 0 !important;
-  }
+    /* 2. Open state */
+    .legal-doc-table-content.is-open .legal-toc-links {
+        display: flex !important;
+        flex-direction: column;
+        max-height: 55vh;
+        overflow-y: auto;
+        border-top: 0.0625rem solid #eaeaea;
+        padding-top: 0 !important;
+        margin-top: 0 !important;
+    }
 
-  /* Individual links */
-  .legal-toc-link {
-    padding: 1rem 1.25rem !important;
-    border-bottom: 0.0625rem solid #eaeaea !important;
-    border-left: none !important;
-    background: transparent !important;
-  }
-  .legal-toc-link:last-child {
-    border-bottom: none !important;
-  }
-  .legal-toc-link p {
-    margin: 0 !important;
-    font-size: 1rem !important;
-    color: #444 !important;
-    font-weight: 400 !important;
-  }
+    /* Individual links */
+    .legal-toc-link {
+        padding: 1rem 1.25rem !important;
+        border-bottom: 0.0625rem solid #eaeaea !important;
+        border-left: none !important;
+        background: transparent !important;
+    }
+    .legal-toc-link:last-child {
+        border-bottom: none !important;
+    }
+    .legal-toc-link p {
+        margin: 0 !important;
+        font-size: 1rem !important;
+        color: #444 !important;
+        font-weight: 400 !important;
+    }
 }
 
 /* test */
 /* Target the 3rd level of nested list items (e.g., 12.4.1.1) */
 .special-bullet-styling ul ul ul > li {
-  padding-left: 4rem !important;
+    padding-left: 4rem !important;
 }
 
 /* Optional: If you ever go down to a 4th level (e.g., 12.4.1.1.1), you might want even more room */
 .special-bullet-styling ul ul ul ul > li {
-  padding-left: 5rem !important;
+    padding-left: 5rem !important;
 }
