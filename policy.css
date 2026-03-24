@@ -149,6 +149,10 @@ button.legal-toc-link {
     padding-left: 4rem !important;
 }
 
+.special-bullet-styling li > ul {
+    padding-left: 2.5rem !important;
+}
+
 /* Optional: If you ever go down to a 4th level (e.g., 12.4.1.1.1), you might want even more room */
 .special-bullet-styling ul ul ul ul > li {
     padding-left: 5rem !important;
