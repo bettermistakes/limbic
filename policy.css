@@ -146,7 +146,7 @@ button.legal-toc-link {
 /* test */
 /* Target the 3rd level of nested list items (e.g., 12.4.1.1) */
 .special-bullet-styling ul ul ul > li {
-    padding-left: 3rem !important;
+    padding-left: 4rem !important;
 }
 
 /* Optional: If you ever go down to a 4th level (e.g., 12.4.1.1.1), you might want even more room */
