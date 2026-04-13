@@ -13,15 +13,18 @@ document.addEventListener("DOMContentLoaded", function () {
     locations: {
       us: {
         terms: "/terms-us",
-        privacy: "/privacy-us",
+        carePrivacy: "/privacy-us",
+        accessPrivacy: "/us-policies/access-privacy-policy-us",
       },
       uk: {
         terms: "/terms-uk",
-        privacy: "/privacy-uk",
+        carePrivacy: "/privacy-uk",
+        accessPrivacy: "/uk-policies/privacy-intake",
       },
       ca: {
         terms: "/terms-canada",
-        privacy: "/privacy-ca",
+        carePrivacy: "/privacy-ca",
+        accessPrivacy: "/",
       },
     },
   };
@@ -43,8 +46,14 @@ document.addEventListener("DOMContentLoaded", function () {
     });
     // Find all "Privacy Policy" links and set their href
     document.querySelectorAll(".privacy-policy-local").forEach((link) => {
-      link.setAttribute("href", urls.privacy);
+      link.setAttribute("href", urls.carePrivacy);
     });
+    // Find all "Access Privacy Policy" links and set their href
+    document
+      .querySelectorAll(".access-privacy-policy-local")
+      .forEach((link) => {
+        link.setAttribute("href", urls.accessPrivacy);
+      });
   }
   async function fetchAndStoreLocation() {
     console.log("Fetching location from Reverse Geocode Client API...");
