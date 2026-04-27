@@ -53,6 +53,7 @@ document.addEventListener("DOMContentLoaded", function () {
       .querySelectorAll(".access-privacy-policy-local")
       .forEach((link) => {
         link.setAttribute("href", urls.accessPrivacy);
+        link.style.display = locationCode === "ca" ? "none" : "";
       });
   }
   async function fetchAndStoreLocation() {
